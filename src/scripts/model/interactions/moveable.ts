@@ -6,7 +6,7 @@ export interface Moveable {
 
 export class MoveableUtils {
     static move(moveable: Moveable ,direction: {dx: number, dy: number}): void {
-        moveable.position.x += direction.dx;
-        moveable.position.y += direction.dy;
+        moveable.position.x += direction.dx * moveable.speed;
+        moveable.position.y += direction.dy * moveable.speed;
     }
 }
