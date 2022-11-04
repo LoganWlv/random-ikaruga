@@ -6,14 +6,14 @@ export default class DemoScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('stars', 'assets/stars.png');
-    this.load.image('sun-transparent-bg', 'assets/sun-transparent-bg.png');
-    this.load.image('stars-transparent-bg', 'assets/stars-transparent-bg.png');
-    this.load.image('bright-stars-transparent-bg', 'assets/bright-stars-transparent-bg.png');
-    this.load.image('ship', 'assets/ship.png');
-    // this.load.spritesheet('asteroids', 'assets/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
+    this.load.image('sky', 'assets/background/sky.png');
+    this.load.image('stars', 'assets/background/stars.png');
+    this.load.image('star', 'assets/ncos/star.png');
+    this.load.image('sun-transparent-bg', 'assets/background/sun-transparent-bg.png');
+    this.load.image('stars-transparent-bg', 'assets/background/stars-transparent-bg.png');
+    this.load.image('bright-stars-transparent-bg', 'assets/background/bright-stars-transparent-bg.png');
+    this.load.image('ship', 'assets/player/ship.png');
+    // this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
   }
 
   create() {
