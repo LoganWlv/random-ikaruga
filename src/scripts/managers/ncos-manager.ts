@@ -7,7 +7,7 @@ export default class NcosManager {
 
     constructor() {
         this.ncos = Array<Nco>();
-        // this.#loadAsteroidsTilemap(); - WIP
+        Asteroid.loadTilemap();
     }
 
     spawnAsteroid(): void {
@@ -22,18 +22,13 @@ export default class NcosManager {
     update(time: number, delta: number): void {
         // spawn
         this.#timeSinceLastAsteroidSpawn += delta;
-        if (time > 5000 && this.#timeSinceLastAsteroidSpawn > 2000) {
+        if (time > 6000 && this.#timeSinceLastAsteroidSpawn > 2000) {
             this.spawnAsteroid();
             this.#timeSinceLastAsteroidSpawn = 0;
         }
 
         this.#cleanNcos();
     }
-
-    // WIP
-    // #loadAsteroidsTilemap(): void {
-    //     Asteroid.loadTilemap(GameManager.scene);
-    // }
 
     #cleanNcos(): void {
         const cleanableNcos = this.ncos.filter((nco) => {

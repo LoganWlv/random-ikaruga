@@ -13,7 +13,7 @@ export default class DemoScene extends Phaser.Scene {
     this.load.image('stars-transparent-bg', 'assets/background/stars-transparent-bg.png');
     this.load.image('bright-stars-transparent-bg', 'assets/background/bright-stars-transparent-bg.png');
     this.load.image('ship', 'assets/player/ship.png');
-    // this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
+    this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
   }
 
   create() {
