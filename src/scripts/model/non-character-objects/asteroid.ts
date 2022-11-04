@@ -47,7 +47,7 @@ export default class Asteroid extends Nco {
 
     constructor() {
         super();
-        this.velocity = {x: Math.Between(-100, -150), y: Math.Between(-20, 20)}; // px/sec
+        this.velocity = {x: Math.Between(-80, -120), y: Math.Between(-20, 20)}; // px/sec
         this.displaySpriteParameters = { ...Asteroid.#asteroidDisplayParameters, ...{posY: Math.Between(100, 500)} };
     }
 
