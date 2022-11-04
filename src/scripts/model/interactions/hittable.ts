@@ -11,7 +11,7 @@ export interface Hittable {
 export class HittableUtils {
     static enableBody(hittable: Hittable): void {
         ifPresent(hittable.sprite, (sprite) => {
-            GameManager.INSTANCE.scene.physics.world.enable(sprite);
+            GameManager.scene.physics.world.enable(sprite);
         });
     }
 

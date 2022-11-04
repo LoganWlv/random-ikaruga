@@ -17,7 +17,7 @@ export default class DemoScene extends Phaser.Scene {
   }
 
   create() {
-    const { world } = GameManager.INSTANCE;
+    const { world } = GameManager;
     world.initSceneManager(this);
     world.initWorldMap();
     world.initPlayerManager();
@@ -29,6 +29,6 @@ export default class DemoScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
-    GameManager.INSTANCE.world.update(time, delta);
+    GameManager.world.update(time, delta);
   }
 }

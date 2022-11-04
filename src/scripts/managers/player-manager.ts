@@ -15,7 +15,7 @@ export default class PlayerManager {
 
     constructor(player: Player) {
         this.player = player;
-        this.KEYS_CONTROL = GameManager.INSTANCE.scene.input.keyboard.addKeys(PlayerManager.#KEY_BINDINGS);
+        this.KEYS_CONTROL = GameManager.scene.input.keyboard.addKeys(PlayerManager.#KEY_BINDINGS);
     }
 
     #vector2Instance = new Math.Vector2({x: 0,y: 0});

@@ -32,7 +32,7 @@ export default class NcosManager {
 
     // WIP
     // #loadAsteroidsTilemap(): void {
-    //     Asteroid.loadTilemap(this.#scene);
+    //     Asteroid.loadTilemap(GameManager.scene);
     // }
 
     #cleanNcos(): void {

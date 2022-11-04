@@ -25,6 +25,38 @@ export default class GameManager {
         GameManager.#CREATING_FROM_INSTANCE = false;
     }
 
+    static get game(): Game {
+        return GameManager.INSTANCE.#game;
+    }
+
+    static get world(): World {
+        return GameManager.INSTANCE.#world;
+    }
+
+    static get worldMap(): WorldMap {
+        return GameManager.INSTANCE.#world.worldMap;
+    }
+
+    static get sceneManager(): SceneManager {
+        return GameManager.INSTANCE.#world.sceneManager;
+    }
+
+    static get scene(): Scene {
+        return GameManager.INSTANCE.#world.sceneManager.scene;
+    }
+
+    static get playerManager(): PlayerManager {
+        return GameManager.INSTANCE.#world.playerManager;
+    }
+
+    static get npcsManager(): NpcsManager {
+        return GameManager.INSTANCE.#world.npcsManager;
+    }
+
+    static get ncosManager(): NcosManager {
+        return GameManager.INSTANCE.#world.ncosManager;
+    }
+
     // INSTANCE
     #game: Game;
     #world: World;
@@ -36,37 +68,5 @@ export default class GameManager {
             throw new Error(GameManager.#ERROR_INSTANCE_NOT_SET);
         this.#game = game;
         this.#world = new World();
-    }
-
-    get game(): Game {
-        return this.#game;
-    }
-
-    get world(): World {
-        return this.#world;
-    }
-
-    get worldMap(): WorldMap {
-        return this.#world.worldMap;
-    }
-
-    get sceneManager(): SceneManager {
-        return this.#world.sceneManager;
-    }
-
-    get scene(): Scene {
-        return this.#world.sceneManager.scene;
-    }
-
-    get playerManager(): PlayerManager {
-        return this.#world.playerManager;
-    }
-
-    get npcsManager(): NpcsManager {
-        return this.#world.npcsManager;
-    }
-
-    get ncosManager(): NcosManager {
-        return this.#world.ncosManager;
     }
 }

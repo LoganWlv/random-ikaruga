@@ -9,40 +9,40 @@ export default class WorldMap {
     }
 
     initSkyBackground(): void {
-        GameManager.INSTANCE.sceneManager.setBackground(0, 0, 'sky');
+        GameManager.sceneManager.setBackground(0, 0, 'sky');
     }
 
     initStarsBackground(): void {
-        GameManager.INSTANCE.sceneManager.setBackground(0, 0, 'stars');
+        GameManager.sceneManager.setBackground(0, 0, 'stars');
     }
 
     // create & add stars parallax to the scene
     initStarsParallaxBackground(): void {
-        const spriteBrightStars = GameManager.INSTANCE.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'bright-stars-transparent-bg');
+        const spriteBrightStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'bright-stars-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.05,
             sprite: spriteBrightStars
         });
-        GameManager.INSTANCE.sceneManager.setTweensEffect({
+        GameManager.sceneManager.setTweensEffect({
             sprite: spriteBrightStars,
             y: 5,
             duration: 1200,
             repeat: -1
         });
 
-        const spriteStars = GameManager.INSTANCE.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'stars-transparent-bg');
+        const spriteStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'stars-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.2,
             sprite: spriteStars
         });
-        GameManager.INSTANCE.sceneManager.setTweensEffect({
+        GameManager.sceneManager.setTweensEffect({
             sprite: spriteStars,
             y: 10,
             duration: 1200,
             repeat: -1
         });
 
-        const spriteSun = GameManager.INSTANCE.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'sun-transparent-bg');
+        const spriteSun = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'sun-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.01,
             sprite: spriteSun
