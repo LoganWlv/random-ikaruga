@@ -1,35 +1,37 @@
+import { Math, Types } from "phaser";
 import { Damageable, DamageableUtils } from "../interactions/damageable";
+import { Displayable, DisplayableUtils, DisplaySpriteParameters } from "../interactions/displayable";
 import { HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
+import { Optional } from "../utils/optional";
 
-export class Character implements Moveable, Damageable {
-    protected _hp = 0.;
-    protected _speed = 0.;
-    protected _position = {x: 0 , y: 0};
+export default class Character implements Moveable, Damageable, Displayable {
+    hp = 0.;
+    velocity: Phaser.Types.Math.Vector2Like = { x: .0, y: .0 };
+    displaySpriteParameters?: Optional<DisplaySpriteParameters>;
+    sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
-    
-    public get hp() : number {
-        return this._hp;
+    move(direction: Math.Vector2, delta: number): void {
+        MoveableUtils.move(this, direction, delta);
     }
 
-    public get speed() : number {
-        return this._speed;
+    accelerate(direction: Math.Vector2, delta: number): void {
+        MoveableUtils.accelerate(this, direction, delta);
     }
 
-    public get position() : {x: number , y: number} {
-        return this._position;
-    }
-
-
-    public move(direction: {dx: number, dy: number}): void {
-        MoveableUtils.move(this, direction);
-    }
-
-    public isHit(): boolean {
+    isHit(): boolean {
         return HittableUtils.isHit(this);
     }
 
-    public takeDamages(dmg: number): void {
+    takeDamages(dmg: number): void {
         DamageableUtils.takeDamages(this, dmg);
+    }
+
+    display(): void {
+        DisplayableUtils.displaySprite(this);
+    };
+
+    enableBody(): void {
+        HittableUtils.enableBody(this);
     }
 }
