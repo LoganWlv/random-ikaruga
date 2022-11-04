@@ -1,3 +1,3 @@
-import { Character } from "./character";
+import Character from "./character";
 
-export class Npc extends Character {}
+export default class Npc extends Character {}
