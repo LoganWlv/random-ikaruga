@@ -13,13 +13,14 @@ export default class Player extends Character {
 
     constructor() {
         super();
-        this.velocity = {x: 140, y: 140}; // px/sec
+        this.velocity = {x: 160, y: 160}; // px/sec
         this.displaySpriteParameters = Player.#spaceshipDisplayParameters;
     }
 
     accelerate(direction: Phaser.Math.Vector2, delta: number): void {
         super.accelerate(direction, delta);
-        MoveableUtils.stabiliseSpeed(this, direction);
+        MoveableUtils.stabiliseSpeed(this, direction, delta);
+        console.log('velocity : ', this.sprite?.body?.velocity);
     }
 
     enableBody(): void {

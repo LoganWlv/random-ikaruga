@@ -9,69 +9,92 @@ export interface Moveable {
 }
 
 export class MoveableUtils {
-    // velocity - override moveable velocity
-    // direction - any vector from a point to another
-    // delta - interpolation factor based on time
+    // velocity - override moveable velocity (vector2d {x: px/sec, y: px/sec})
+    // direction - vector2d
+    // delta - ime in ms
     static forceMove(moveable: Moveable, velocity: Phaser.Types.Math.Vector2Like, direction: Phaser.Math.Vector2, delta: number): void {
         if (!moveable.sprite) { return; }
         
         const normDirection = direction.normalize();
         if (velocity?.x) {
-            moveable.sprite.x += delta * normDirection.x * velocity.x;
+            moveable.sprite.x += (delta/1000) * normDirection.x * velocity.x;
         }
         if (velocity?.y) {
-            moveable.sprite.y += delta * normDirection.y * velocity.y;
+            moveable.sprite.y += (delta/1000) * normDirection.y * velocity.y;
         }
     }
 
-    // direction - any vector from a point to another
-    // delta - interpolation factor based on time
+    // direction - vector2d
+    // delta - time in ms
     static move(moveable: Moveable, direction: Phaser.Math.Vector2, delta: number): void {
         if (!moveable.sprite) { return; }
 
         const normDirection = direction.normalize();
         if (moveable.velocity?.x) {
-            moveable.sprite.x += delta * normDirection.x * moveable.velocity.x;
+            moveable.sprite.x += (delta/1000) * normDirection.x * moveable.velocity.x;
         }
         if (moveable.velocity?.y) {
-            moveable.sprite.y += delta * normDirection.y * moveable.velocity.y;
+            moveable.sprite.y += (delta/1000) * normDirection.y * moveable.velocity.y;
         }
     }
 
-    // direction - any vector from a point to another
-    // delta - interpolation factor based on time
-    // in this function we increase the velocity of the object and not its position
+    // direction - vector2d
+    // delta - time in ms
+    // increase the velocity of the object and not its position
     static accelerate(moveable: Moveable, direction: Phaser.Math.Vector2, delta: number): void {
         if (!moveable.sprite) { return; }
 
         // accelerate smoothly
         const normDirection = direction.normalize();
-        moveable.sprite.body.velocity.x += delta * normDirection.x;
-        moveable.sprite.body.velocity.y += delta * normDirection.y;
+        if (moveable.velocity.x) {
+            moveable.sprite.body.velocity.x += (delta/200) * normDirection.x * moveable.velocity.x; // acceleration to velocity speed (px/sec) in .2 sec
+            // cap velocity
+            if (moveable.velocity.x ** 2 < moveable.sprite.body.velocity.x ** 2) {
+                const sign = moveable.sprite.body.velocity.x < 0 ? -1 : 1;
+                moveable.sprite.body.velocity.x = moveable.velocity.x * sign;
+            }
+        }
+        if (moveable.velocity.y) {
+            moveable.sprite.body.velocity.y += (delta/200) * normDirection.y * moveable.velocity.y; // acceleration to velocity speed (px/sec) in .2 sec
+            // cap velocity
+            if (moveable.velocity.y ** 2 < moveable.sprite.body.velocity.y ** 2) {
+                const sign = moveable.sprite.body.velocity.y < 0 ? -1 : 1;
+                moveable.sprite.body.velocity.y = moveable.velocity.y * sign;
+            }
+        }
+
         
-        // cap to moveable.velocity
-        if (moveable.velocity?.x && moveable.velocity.x ** 2 < moveable.sprite.body.velocity.x ** 2) {
-            const sign = moveable.sprite.body.velocity.x < 0 ? -1 : 1;
-            moveable.sprite.body.velocity.x = moveable.velocity.x * sign;
-        }
-        if (moveable.velocity?.y && moveable.velocity.y ** 2 < moveable.sprite.body.velocity.y ** 2) {
-            const sign = moveable.sprite.body.velocity.y < 0 ? -1 : 1;
-            moveable.sprite.body.velocity.y = moveable.velocity.y * sign;
-        }
+        
     }
 
+    // direction - vector2d
+    // delta - time in ms
     // stabilise without input
-    static stabiliseSpeed(moveable: Moveable, direction: Phaser.Math.Vector2) {
+    static stabiliseSpeed(moveable: Moveable, direction: Phaser.Math.Vector2, delta: number) {
         if (!moveable.sprite) { return; }
         const normDirection = direction.normalize();
         const noInput = (normDirection.x * normDirection.x + normDirection.y * normDirection.y) === 0;
         if (noInput) {
-            moveable.sprite.body.velocity.x = moveable.sprite.body.velocity.x * 0.98;
-            moveable.sprite.body.velocity.y = moveable.sprite.body.velocity.y * 0.98;
+            if (moveable.velocity.x) {
+                const sign = moveable.sprite.body.velocity.x < 0 ? -1 : 1;
+                if (moveable.sprite.body.velocity.x ** 2 > ((delta/1000) * moveable.velocity.x) ** 2) {
+                    moveable.sprite.body.velocity.x -= sign * (delta/1000) * moveable.velocity.x; // deceleration to velocity speed (px/sec) in .5 sec
+                } else {
+                    moveable.sprite.body.velocity.x = 0;
+                }
+            }
+            if (moveable.velocity.y) {
+                const sign = moveable.sprite.body.velocity.y < 0 ? -1 : 1;
+                if (moveable.sprite.body.velocity.y ** 2 > ((delta/1000) * moveable.velocity.y) ** 2) {
+                    moveable.sprite.body.velocity.y -= sign * (delta/1000) * moveable.velocity.y; // deceleration to velocity speed (px/sec) in .5 sec
+                } else {
+                    moveable.sprite.body.velocity.y = 0;
+                }
+            }
         }
     }
 
-    // direction - any vector from a point to another
+    // direction - vector2d
     static setStaticAcceleration(moveable: Moveable): void {
         if (!moveable.sprite) { return; }
         if (moveable.velocity.x) {
