@@ -55,5 +55,6 @@ export default class Asteroid extends Nco {
         super.display();
         const randomAnimationKey = Asteroid.tilemapKeys[Math.Between(0, Asteroid.tilemapKeys.length - 1)];
         this.sprite?.play(randomAnimationKey);
+        this.sprite?.setCircle(35, 35, 35); // set custom circle hitbox
     }
 }
