@@ -1,6 +1,8 @@
+import { HittableUtils } from "../model/interactions/hittable";
 import Asteroid from "../model/non-character-objects/asteroid";
 import BlueStar from "../model/non-character-objects/blue-star";
 import Nco from "../model/non-character-objects/nco";
+import GameManager from "./game-manager";
 
 export default class NcosManager {
     ncos: Array<Nco>;
@@ -16,6 +18,8 @@ export default class NcosManager {
         asteroid.display();
         asteroid.enableBody();
         asteroid.setStaticAcceleration();
+        asteroid.sprite?.setBounce(3, 3);
+        HittableUtils.enableCollision(asteroid, GameManager.playerManager.player, () => undefined);
         this.ncos.push(asteroid);
     }
 
@@ -24,6 +28,10 @@ export default class NcosManager {
         star.display();
         star.enableBody();
         star.setStaticAcceleration();
+        HittableUtils.enableOverlap(star, GameManager.playerManager.player, () => {
+            this.ncos = this.ncos.filter((nco) => nco !== star);
+            star.sprite?.destroy();
+        });
         this.ncos.push(star);
     }
 
@@ -48,7 +56,7 @@ export default class NcosManager {
 
     #cleanNcos(): void {
         const cleanableNcos = this.ncos.filter((nco) => {
-            const position = nco.sprite?.body.position;
+            const position = nco.sprite?.body?.position;
             if (position?.x && position?.y) {
                 if (position.x > 900 || position.x < -100) return true;
                 if (position.y > 700 || position.y < -100) return true;

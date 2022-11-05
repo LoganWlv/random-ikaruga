@@ -13,7 +13,7 @@ export default class Player extends Character {
 
     constructor() {
         super();
-        this.velocity = {x: 120, y: 120}; // px/sec
+        this.velocity = {x: 140, y: 140}; // px/sec
         this.displaySpriteParameters = Player.#spaceshipDisplayParameters;
     }
 
@@ -24,6 +24,9 @@ export default class Player extends Character {
 
     enableBody(): void {
         super.enableBody();
+    }
+
+    enableWorldCollision(): void {
         HittableUtils.enableWorldBounds(this);
     }
 }

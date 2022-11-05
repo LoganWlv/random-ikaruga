@@ -9,6 +9,18 @@ export interface Hittable {
 }
 
 export class HittableUtils {
+    static enableCollision(hittable: Hittable, other: Hittable, onHit: ArcadePhysicsCallback): void {
+        if (hittable.sprite && other.sprite) {
+            GameManager.scene.physics.add.collider(hittable.sprite, other.sprite, onHit);
+        }
+    }
+
+    static enableOverlap(hittable: Hittable, other: Hittable, onHit: ArcadePhysicsCallback): void {
+        if (hittable.sprite && other.sprite) {
+            GameManager.scene.physics.add.overlap(hittable.sprite, other.sprite, onHit);
+        }
+    }
+
     static enableBody(hittable: Hittable): void {
         ifPresent(hittable.sprite, (sprite) => {
             GameManager.scene.physics.world.enable(sprite);

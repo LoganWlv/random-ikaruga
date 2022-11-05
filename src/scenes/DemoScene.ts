@@ -20,7 +20,10 @@ export default class DemoScene extends Phaser.Scene {
     const { world } = GameManager;
     world.initSceneManager(this);
     world.initWorldMap();
+    world.worldMap.initStarsBackground();
+    world.worldMap.initStarsParallaxBackground();
     world.initPlayerManager();
+    world.playerManager.spawn();
     world.initNcosManager();
     world.initNpcsManager();
     // ifPresent(world.playerManager.player.sprite, (sprite) => {

@@ -56,15 +56,10 @@ export default class World {
 
     initWorldMap(): void {
         this.#worldMap = new WorldMap();
-        this.#worldMap.initStarsBackground();
-        // this.worldMap.initSkyBackground();
-        this.#worldMap.initStarsParallaxBackground();
     }
 
     initPlayerManager(): void {
         this.#playerManager = new PlayerManager(new Player());
-        this.#playerManager.player.display();
-        this.#playerManager.player.enableBody();
     }
 
     initNcosManager(): void {

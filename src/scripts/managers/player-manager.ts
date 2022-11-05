@@ -18,6 +18,12 @@ export default class PlayerManager {
         this.KEYS_CONTROL = GameManager.scene.input.keyboard.addKeys(PlayerManager.#KEY_BINDINGS);
     }
 
+    spawn(): void {
+        this.player.display();
+        this.player.enableBody();
+        this.player.enableWorldCollision();
+    }
+
     #vector2Instance = new Math.Vector2({x: 0,y: 0});
     update(delta: number): void {
         this.#vector2Instance.y = this.KEYS_CONTROL.UP.isDown ? -1 : 0;

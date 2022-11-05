@@ -46,8 +46,8 @@ export class MoveableUtils {
 
         // accelerate smoothly
         const normDirection = direction.normalize();
-        moveable.sprite.body.velocity.x += (delta / 6) * normDirection.x;
-        moveable.sprite.body.velocity.y += (delta / 6) * normDirection.y;
+        moveable.sprite.body.velocity.x += delta * normDirection.x;
+        moveable.sprite.body.velocity.y += delta * normDirection.y;
         
         // cap to moveable.velocity
         if (moveable.velocity?.x && moveable.velocity.x ** 2 < moveable.sprite.body.velocity.x ** 2) {
