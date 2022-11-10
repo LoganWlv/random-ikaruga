@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import GameManager from "./game-manager";
+import GameManager from "../game-manager";
 
 export default class WorldMap {
     #backgroundParallax: {ratioX: number; sprite: GameObjects.TileSprite }[];

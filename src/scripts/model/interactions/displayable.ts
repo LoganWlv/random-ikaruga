@@ -19,7 +19,7 @@ export interface Displayable {
 export class DisplayableUtils {
     static displaySprite(displayable: Displayable): void {
         ifPresent(displayable.displaySpriteParameters, (displaySpriteParameters) =>
-            displayable.sprite = GameManager.world.sceneManager.displaySprite(displaySpriteParameters)
+            displayable.sprite = GameManager.sceneManager.displaySprite(displaySpriteParameters)
         );
     }
 }

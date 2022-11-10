@@ -1,8 +1,8 @@
-import { HittableUtils } from "../model/interactions/hittable";
-import Asteroid from "../model/non-character-objects/asteroid";
-import BlueStar from "../model/non-character-objects/blue-star";
-import Nco from "../model/non-character-objects/nco";
-import GameManager from "./game-manager";
+import { HittableUtils } from "../../model/interactions/hittable";
+import Asteroid from "../../model/non-character-objects/asteroid";
+import BlueStar from "../../model/non-character-objects/blue-star";
+import Nco from "../../model/non-character-objects/nco";
+import GameManager from "../game-manager";
 
 export default class NcosManager {
     ncos: Array<Nco>;

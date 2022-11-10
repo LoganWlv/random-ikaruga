@@ -1,4 +1,4 @@
-import Npc from "../model/characters/npc";
+import Npc from "../../model/characters/npc";
 
 export default class NpcsManager {
     npcs: Array<Npc>;

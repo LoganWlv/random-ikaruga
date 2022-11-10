@@ -20,7 +20,6 @@ export default class Player extends Character {
     accelerate(direction: Phaser.Math.Vector2, delta: number): void {
         super.accelerate(direction, delta);
         MoveableUtils.stabiliseSpeed(this, direction, delta);
-        console.log('velocity : ', this.sprite?.body?.velocity);
     }
 
     enableBody(): void {

@@ -1,18 +1,14 @@
-import { Scene } from "phaser";
 import NcosManager from "./ncos-manager";
 import PlayerManager from "./player-manager";
-import Player from "../model/characters/player";
+import Player from "../../model/characters/player";
 import WorldMap from "./world-map";
 import NpcsManager from "./npcs-manager";
-import SceneManager from "./scene-manager";
 
 export default class World {
     static #ERROR_INSTANCE_NOT_SET = 'You should initialize the instance';
-    static #ERROR_MISSING_SCENE = 'You should initialize the SceneManager first';
     #playerManager?: PlayerManager;
     #ncosManager?: NcosManager;
     #npcsManager?: NpcsManager;
-    #sceneManager?: SceneManager;
     #worldMap?: WorldMap;
 
     get playerManager(): PlayerManager {
@@ -41,17 +37,6 @@ export default class World {
             throw new Error(World.#ERROR_INSTANCE_NOT_SET);
         }
         return this.#worldMap;
-    }
-
-    get sceneManager(): SceneManager {
-        if (!this.#sceneManager) {
-            throw new Error(World.#ERROR_MISSING_SCENE);
-        }
-        return this.#sceneManager;
-    }
-
-    initSceneManager(scene: Scene): void {
-        this.#sceneManager = new SceneManager(scene);
     }
 
     initWorldMap(): void {
