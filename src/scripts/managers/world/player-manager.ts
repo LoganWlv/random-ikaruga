@@ -1,6 +1,6 @@
 import { Input, Math } from "phaser";
-import Player from "../model/characters/player";
-import GameManager from "./game-manager";
+import Player from "../../model/characters/player";
+import GameManager from "../game-manager";
 
 export default class PlayerManager {
     static #KEY_BINDINGS: {[key: string]: number} = {

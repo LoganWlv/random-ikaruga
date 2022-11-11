@@ -18,7 +18,7 @@ export default class DemoScene extends Phaser.Scene {
 
   create() {
     const { world } = GameManager;
-    world.initSceneManager(this);
+    GameManager.initSceneManager(this);
     world.initWorldMap();
     world.worldMap.initStarsBackground();
     world.worldMap.initStarsParallaxBackground();

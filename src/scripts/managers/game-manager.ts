@@ -1,14 +1,15 @@
 import { Game, Scene } from "phaser";
-import NcosManager from "./ncos-manager";
-import NpcsManager from "./npcs-manager";
-import PlayerManager from "./player-manager";
+import NcosManager from "./world/ncos-manager";
+import NpcsManager from "./world/npcs-manager";
+import PlayerManager from "./world/player-manager";
 import SceneManager from "./scene-manager";
-import World from "./world";
-import WorldMap from "./world-map";
+import World from "./world/world";
+import WorldMap from "./world/world-map";
 
 export default class GameManager {
     static #ERROR_INSTANCE_NOT_SET = 'You should initialize the GameManager with a Phaser.Game instance';
     static #ERROR_CREATE_OUTSIDE = 'Not able to create a GameManager instance outside the class';
+    static #ERROR_MISSING_SCENE = 'You should initialize the SceneManager first';
     // GLOBAL
     static #INSTANCE: GameManager;
     static #CREATING_FROM_INSTANCE = false; // private constructor pattern
@@ -25,6 +26,10 @@ export default class GameManager {
         GameManager.#CREATING_FROM_INSTANCE = false;
     }
 
+    static initSceneManager(scene: Scene): void {
+        GameManager.#INSTANCE.sceneManager = new SceneManager(scene);
+    }
+
     static get game(): Game {
         return GameManager.INSTANCE.#game;
     }
@@ -38,11 +43,11 @@ export default class GameManager {
     }
 
     static get sceneManager(): SceneManager {
-        return GameManager.INSTANCE.#world.sceneManager;
+        return GameManager.INSTANCE.sceneManager;
     }
 
     static get scene(): Scene {
-        return GameManager.INSTANCE.#world.sceneManager.scene;
+        return GameManager.INSTANCE.sceneManager.scene;
     }
 
     static get playerManager(): PlayerManager {
@@ -60,6 +65,7 @@ export default class GameManager {
     // INSTANCE
     #game: Game;
     #world: World;
+    #sceneManager?: SceneManager;
 
     constructor(game: Game) {
         if (!GameManager.#CREATING_FROM_INSTANCE)
@@ -68,5 +74,16 @@ export default class GameManager {
             throw new Error(GameManager.#ERROR_INSTANCE_NOT_SET);
         this.#game = game;
         this.#world = new World();
+    }
+
+    get sceneManager(): SceneManager {
+        if (!this.#sceneManager) {
+            throw new Error(GameManager.#ERROR_MISSING_SCENE);
+        }
+        return this.#sceneManager;
+    }
+
+    set sceneManager(sceneManager: SceneManager) {
+        this.#sceneManager = sceneManager;
     }
 }
