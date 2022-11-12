@@ -1,4 +1,11 @@
+import { Math } from 'phaser';
 import GameManager from '../scripts/managers/game-manager';
+import SceneManager from '../scripts/managers/scene-manager';
+import { DisplaySpriteParameters } from '../scripts/model/interactions/displayable';
+import { HittableUtils } from '../scripts/model/interactions/hittable';
+import Asteroid from '../scripts/model/non-character-objects/asteroid';
+import BlueStar from '../scripts/model/non-character-objects/blue-star';
+import Spawner from '../scripts/model/spawners/spawner';
 
 export default class DemoScene extends Phaser.Scene {
   constructor() {
@@ -16,6 +23,7 @@ export default class DemoScene extends Phaser.Scene {
     this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
   }
 
+  #asteroidSpawner?: Spawner<Asteroid>;
   create() {
     const { world } = GameManager;
     GameManager.initSceneManager(this);
@@ -24,14 +32,52 @@ export default class DemoScene extends Phaser.Scene {
     world.worldMap.initStarsParallaxBackground();
     world.initPlayerManager();
     world.playerManager.spawn();
+
     world.initNcosManager();
+    // should be isolated in a dedicated spawner for real scenes (inherited spawner)
+    const asteroidSpawnPattern = () => {
+        const asteroid = new Asteroid();
+        const displayParams: DisplaySpriteParameters = { ...Asteroid.asteroidDisplayParameters, posY: Math.Between(100, SceneManager.viewPort.height - 100) }
+        asteroid.display(displayParams); // add missing params
+        asteroid.enableBody();
+        asteroid.velocity = {x: Math.Between(80, 120), y: Math.Between(-20, 20)}; // px/sec
+        asteroid.accelerate(new Math.Vector2({x: -1, y: 1})); // direction
+        // custom bounce effect for asteroid coming from that spawner
+        HittableUtils.enableCollision(asteroid, GameManager.playerManager.player, () => undefined);
+        asteroid.sprite?.setBounce(3, 3);
+        return asteroid;
+    };
+    this.#asteroidSpawner = new Spawner<Asteroid>({startingTime: 10000, waitingTime: 2500, spawnPattern: asteroidSpawnPattern});
+    world.ncosManager.addSpawner(this.#asteroidSpawner);
+
+    // same
+    const blueStarSpawnPattern = () => {
+      const blueStar = new BlueStar();
+      const displayParams: DisplaySpriteParameters = { ...BlueStar.starDisplayParameters, posY: Math.Between(100, SceneManager.viewPort.height - 100) }
+      blueStar.display(displayParams); // add missing params
+      blueStar.enableBody();
+      blueStar.velocity = {x: Math.Between(140, 180), y: Math.Between(-20, 20)}; // px/sec
+      blueStar.accelerate(new Math.Vector2({x: -1, y: 1})); // direction
+      // custom behaviour: disappear
+      HittableUtils.enableOverlap(blueStar, GameManager.playerManager.player, () => {
+          GameManager.ncosManager.destroyNco(blueStar);
+      });
+      return blueStar;
+    };
+    const blueStarSpawner = new Spawner<BlueStar>({startingTime: 4000, waitingTime: 2000, spawnPattern: blueStarSpawnPattern});
+    world.ncosManager.addSpawner(blueStarSpawner);
+
     world.initNpcsManager();
-    // ifPresent(world.playerManager.player.sprite, (sprite) => {
-      // this.cameras.main.startFollow(sprite);
-    // });
   }
 
+  #wallOfAsteroid = 15;
   update(time: number, delta: number): void {
     GameManager.world.update(time, delta);
+
+    // special event (could be done with a dedicated spawn directly)
+    if (time > 15000 && this.#wallOfAsteroid) {
+        this.#asteroidSpawner?.spawn();
+        this.#wallOfAsteroid --;
+    }
   }
 }
