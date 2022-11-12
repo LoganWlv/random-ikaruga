@@ -1,10 +1,11 @@
-import { Math } from "phaser";
+import SceneManager from "../../managers/scene-manager";
+import { DisplaySpriteParameters } from "../interactions/displayable";
 import Nco from "./nco";
 
 export default class BlueStar extends Nco {
-    static #starDisplayParameters = {
-        posX: 820,
-        posY: 0,
+    static starDisplayParameters: DisplaySpriteParameters = {
+        posX: SceneManager.viewPort.width,
+        posY: SceneManager.viewPort.height / 2,
         rotation: 0,
         scale: 1,
         spriteRef: 'star'
@@ -12,7 +13,6 @@ export default class BlueStar extends Nco {
 
     constructor() {
         super();
-        this.velocity = {x: Math.Between(-140, -180), y: Math.Between(-20, 20)}; // px/sec
-        this.displaySpriteParameters = { ...BlueStar.#starDisplayParameters, ...{posY: Math.Between(100, 500)} };
+        this.velocity = {x: 160, y: 0}; // default
     }
 }
