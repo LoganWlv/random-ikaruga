@@ -18,6 +18,12 @@ export default class WorldMap {
 
     // create & add stars parallax to the scene
     initStarsParallaxBackground(): void {
+        const spriteSun = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'sun-transparent-bg');
+        this.#backgroundParallax.push({
+            ratioX: 0.01,
+            sprite: spriteSun
+        });
+
         const spriteBrightStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'bright-stars-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.05,
@@ -40,12 +46,6 @@ export default class WorldMap {
             y: 10,
             duration: 1200,
             repeat: -1
-        });
-
-        const spriteSun = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'sun-transparent-bg');
-        this.#backgroundParallax.push({
-            ratioX: 0.01,
-            sprite: spriteSun
         });
     }
 

@@ -3,13 +3,13 @@ import { DisplaySpriteParameters } from "../model/interactions/displayable";
 import { Optional } from "../model/utils/optional";
 
 export default class SceneManager {
-    static #viewPort = {width: 800, height: 600};
+    static viewPort = {width: 800, height: 600};
     scene: Phaser.Scene;
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene;
         // 10px inner padding
-        this.scene.physics.world.setBounds(10, 10, SceneManager.#viewPort.width - 20, SceneManager.#viewPort.height - 20);
+        this.scene.physics.world.setBounds(10, 10, SceneManager.viewPort.width - 20, SceneManager.viewPort.height - 20);
     }
 
     // create & add fix background image to the scene

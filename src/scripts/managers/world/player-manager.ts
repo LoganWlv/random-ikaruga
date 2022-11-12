@@ -19,7 +19,7 @@ export default class PlayerManager {
     }
 
     spawn(): void {
-        this.player.display();
+        this.player.display(Player.spaceshipDisplayParameters);
         this.player.enableBody();
         this.player.enableWorldCollision();
     }

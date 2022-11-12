@@ -1,56 +1,38 @@
-import { HittableUtils } from "../../model/interactions/hittable";
 import Asteroid from "../../model/non-character-objects/asteroid";
-import BlueStar from "../../model/non-character-objects/blue-star";
 import Nco from "../../model/non-character-objects/nco";
-import GameManager from "../game-manager";
+import Spawner from "../../model/spawners/spawner";
+import { isPresent } from "../../model/utils/optional";
+import SceneManager from "../scene-manager";
 
 export default class NcosManager {
     ncos: Array<Nco>;
-    // TODO - add a set of spawners to update
+    #spawners: Array<Spawner<Nco>> = [];
 
     constructor() {
         this.ncos = Array<Nco>();
         Asteroid.loadTilemap();
     }
-
-    spawnAsteroid(): void {
-        const asteroid = new Asteroid();
-        asteroid.display();
-        asteroid.enableBody();
-        asteroid.setStaticAcceleration();
-        asteroid.sprite?.setBounce(3, 3);
-        HittableUtils.enableCollision(asteroid, GameManager.playerManager.player, () => undefined);
-        this.ncos.push(asteroid);
+    
+    destroyNco(nco: Nco): void {
+        this.ncos = this.ncos.filter((current) => current !== nco);
+        nco.sprite?.destroy();
     }
 
-    spawnBlueStar(): void {
-        const star = new BlueStar();
-        star.display();
-        star.enableBody();
-        star.setStaticAcceleration();
-        HittableUtils.enableOverlap(star, GameManager.playerManager.player, () => {
-            this.ncos = this.ncos.filter((nco) => nco !== star);
-            star.sprite?.destroy();
-        });
-        this.ncos.push(star);
+    addSpawner(spawner: Spawner<Nco>): void {
+        this.#spawners.push(spawner);
     }
 
-    #timeSinceLastAsteroidSpawn: number = 0; // ms - should be encapsulated in a spawner
-    #timeSinceLastStarSpawn: number = 0; // ms - should be encapsulated in a spawner
+    removeSpawner(spawner: Spawner<Nco>): void {
+        this.#spawners = this.#spawners.filter(s => s !== spawner);
+    }
+
     update(time: number, delta: number): void {
-        // spawns
-        this.#timeSinceLastAsteroidSpawn += delta;
-        if (time > 10000 && this.#timeSinceLastAsteroidSpawn > 2500) {
-            this.spawnAsteroid();
-            this.#timeSinceLastAsteroidSpawn = 0;
-        }
-
-        this.#timeSinceLastStarSpawn += delta;
-        if (time > 4000 && this.#timeSinceLastStarSpawn > 2000) {
-            this.spawnBlueStar();
-            this.#timeSinceLastStarSpawn = 0;
-        }
-
+        const spawnedNcos = this.#spawners
+            .map((spawner) => spawner.update(time, delta))
+            .filter((nco) => isPresent(nco)) as Nco[];
+        this.ncos.push(
+            ...spawnedNcos
+        );
         this.#cleanNcos();
     }
 
@@ -58,8 +40,8 @@ export default class NcosManager {
         const cleanableNcos = this.ncos.filter((nco) => {
             const position = nco.sprite?.body?.position;
             if (position?.x && position?.y) {
-                if (position.x > 900 || position.x < -100) return true;
-                if (position.y > 700 || position.y < -100) return true;
+                if (position.x > SceneManager.viewPort.width + 100 || position.x < -100) return true;
+                if (position.y > SceneManager.viewPort.height || position.y < -100) return true;
             }
         });
         cleanableNcos.forEach((cleanableNco) => {

@@ -11,15 +11,12 @@ export interface DisplaySpriteParameters {
 }
 
 export interface Displayable {
-    displaySpriteParameters?: Optional<DisplaySpriteParameters>;
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
-    display: () => void;
+    display: (displaySpriteParameters: DisplaySpriteParameters) => void;
 }
 
 export class DisplayableUtils {
-    static displaySprite(displayable: Displayable): void {
-        ifPresent(displayable.displaySpriteParameters, (displaySpriteParameters) =>
-            displayable.sprite = GameManager.sceneManager.displaySprite(displaySpriteParameters)
-        );
+    static displaySprite(displayable: Displayable, displaySpriteParameters: DisplaySpriteParameters): void {
+        displayable.sprite = GameManager.sceneManager.displaySprite(displaySpriteParameters);
     }
 }

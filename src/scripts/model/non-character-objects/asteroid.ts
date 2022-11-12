@@ -1,11 +1,13 @@
 import { Math } from "phaser";
 import GameManager from "../../managers/game-manager";
+import SceneManager from "../../managers/scene-manager";
+import { DisplaySpriteParameters } from "../interactions/displayable";
 import Nco from "./nco";
 
 export default class Asteroid extends Nco {
-    static #asteroidDisplayParameters = {
-        posX: 820,
-        posY: 0,
+    static asteroidDisplayParameters: DisplaySpriteParameters = {
+        posX: SceneManager.viewPort.width,
+        posY: SceneManager.viewPort.height / 2,
         rotation: 0,
         scale: .6,
         spriteRef: 'asteroids'
@@ -47,14 +49,17 @@ export default class Asteroid extends Nco {
 
     constructor() {
         super();
-        this.velocity = {x: Math.Between(-80, -120), y: Math.Between(-20, 20)}; // px/sec
-        this.displaySpriteParameters = { ...Asteroid.#asteroidDisplayParameters, ...{posY: Math.Between(100, 500)} };
+        this.velocity = {x: 100, y: 0}; // default
     }
 
-    display(): void {
-        super.display();
+    display(displaySpriteParameters: DisplaySpriteParameters): void {
+        super.display(displaySpriteParameters);
         const randomAnimationKey = Asteroid.tilemapKeys[Math.Between(0, Asteroid.tilemapKeys.length - 1)];
         this.sprite?.play(randomAnimationKey);
-        this.sprite?.setCircle(35, 35, 35); // set custom circle hitbox
+    }
+
+    enableBody(): void {
+        super.enableBody();
+        this.sprite?.setCircle(35, 35, 35); // custom circle hitbox
     }
 }

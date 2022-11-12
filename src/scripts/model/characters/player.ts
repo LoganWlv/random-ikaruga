@@ -1,11 +1,13 @@
+import SceneManager from "../../managers/scene-manager";
+import { DisplaySpriteParameters } from "../interactions/displayable";
 import { HittableUtils } from "../interactions/hittable";
 import { MoveableUtils } from "../interactions/moveable";
 import Character from "./character";
 
 export default class Player extends Character {
-    static #spaceshipDisplayParameters = {
-        posX: 400,
-        posY: 300,
+    static spaceshipDisplayParameters: DisplaySpriteParameters  = {
+        posX: SceneManager.viewPort.width / 2,
+        posY: SceneManager.viewPort.height / 2,
         rotation: 90,
         scale: 0.6,
         spriteRef: 'ship'
@@ -14,11 +16,10 @@ export default class Player extends Character {
     constructor() {
         super();
         this.velocity = {x: 160, y: 160}; // px/sec
-        this.displaySpriteParameters = Player.#spaceshipDisplayParameters;
     }
 
     accelerate(direction: Phaser.Math.Vector2, delta: number): void {
-        super.accelerate(direction, delta);
+        MoveableUtils.accelerate(this, direction, delta);
         MoveableUtils.stabiliseSpeed(this, direction, delta);
     }
 

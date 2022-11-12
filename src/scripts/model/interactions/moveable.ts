@@ -62,9 +62,6 @@ export class MoveableUtils {
                 moveable.sprite.body.velocity.y = moveable.velocity.y * sign;
             }
         }
-
-        
-        
     }
 
     // direction - vector2d
@@ -95,13 +92,14 @@ export class MoveableUtils {
     }
 
     // direction - vector2d
-    static setStaticAcceleration(moveable: Moveable): void {
+    static setStaticAcceleration(moveable: Moveable, direction: Phaser.Math.Vector2): void {
         if (!moveable.sprite) { return; }
+        const normDirection = direction.normalize();
         if (moveable.velocity.x) {
-            moveable.sprite.body.velocity.x = moveable.velocity.x;
+            moveable.sprite.body.velocity.x = moveable.velocity.x * normDirection.x;
         }
         if (moveable.velocity.y) {
-            moveable.sprite.body.velocity.y = moveable.velocity.y;
+            moveable.sprite.body.velocity.y = moveable.velocity.y * normDirection.y;
         }
     }
 }
