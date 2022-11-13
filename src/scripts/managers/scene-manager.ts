@@ -1,9 +1,10 @@
 import { GameObjects, Tweens, Types } from "phaser";
+import config from "../../config";
 import { DisplaySpriteParameters } from "../model/interactions/displayable";
 import { Optional } from "../model/utils/optional";
 
 export default class SceneManager {
-    static viewPort = {width: 800, height: 600};
+    static viewPort = {width: config.scale.width, height: config.scale.height};
     scene: Phaser.Scene;
 
     constructor(scene: Phaser.Scene) {

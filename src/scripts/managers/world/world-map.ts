@@ -1,5 +1,6 @@
 import { GameObjects } from "phaser";
 import GameManager from "../game-manager";
+import SceneManager from "../scene-manager";
 
 export default class WorldMap {
     #backgroundParallax: {ratioX: number; sprite: GameObjects.TileSprite }[];
@@ -18,13 +19,13 @@ export default class WorldMap {
 
     // create & add stars parallax to the scene
     initStarsParallaxBackground(): void {
-        const spriteSun = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'sun-transparent-bg');
+        const spriteSun = GameManager.sceneManager.setBackgroundTileSprite(0, 0, SceneManager.viewPort.width, SceneManager.viewPort.height, 'sun-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.01,
             sprite: spriteSun
         });
 
-        const spriteBrightStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'bright-stars-transparent-bg');
+        const spriteBrightStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, SceneManager.viewPort.width, SceneManager.viewPort.height, 'bright-stars-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.05,
             sprite: spriteBrightStars
@@ -36,7 +37,7 @@ export default class WorldMap {
             repeat: -1
         });
 
-        const spriteStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, 800, 600, 'stars-transparent-bg');
+        const spriteStars = GameManager.sceneManager.setBackgroundTileSprite(0, 0, SceneManager.viewPort.width, SceneManager.viewPort.height, 'stars-transparent-bg');
         this.#backgroundParallax.push({
             ratioX: 0.2,
             sprite: spriteStars
