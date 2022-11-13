@@ -5,7 +5,7 @@ import { HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
 import { Optional } from "../utils/optional";
 
-export default class Character implements Moveable, Damageable, Displayable {
+export default abstract class Character implements Moveable, Damageable, Displayable {
     hp = 0.;
     velocity: Phaser.Types.Math.Vector2Like = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;

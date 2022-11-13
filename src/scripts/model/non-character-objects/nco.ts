@@ -6,7 +6,7 @@ import { Spawnable } from "../interactions/spawnable";
 import { Optional } from "../utils/optional";
 import { Updatable } from '../interactions/updatable';
 
-export default class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
+export default abstract class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
     velocity: Phaser.Types.Math.Vector2Like = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
