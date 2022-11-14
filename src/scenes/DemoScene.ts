@@ -64,6 +64,7 @@ export default class DemoScene extends Phaser.Scene {
       HittableUtils.enableOverlap(blueStar, GameManager.playerManager.player, () => {
           GameManager.ncosManager.destroyNco(blueStar);
           const explosion = new Explosion();
+          GameManager.ncosManager.addNco(explosion);
           explosion.displayExplosion({
             ...Explosion.displaySpriteParameters,
             posX: blueStar.sprite?.x ?? 0,

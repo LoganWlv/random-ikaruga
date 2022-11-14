@@ -11,6 +11,9 @@ export default class Explosion extends Nco {
     spriteRef: 'explosion'
   }
 
+  #cumulatedTime = 0. // ms
+  #lifeTime = 5000.; // ms
+
   static loadTilemap(): void {
     const { scene } = GameManager;
     scene.anims.create({
@@ -27,6 +30,15 @@ export default class Explosion extends Nco {
   displayExplosion(displaySpriteParameters: DisplaySpriteParameters): void {
     super.display(displaySpriteParameters);
     this.sprite?.play('explode');
+  }
+
+  update(time: number, delta: number) {
+    this.#cumulatedTime += delta;
+
+    if(this.#cumulatedTime > this.#lifeTime) {
+      this.#cumulatedTime = 0;
+      GameManager.ncosManager.destroyNco(this);
+    }
   }
 
   constructor() {

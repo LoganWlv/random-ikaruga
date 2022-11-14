@@ -24,6 +24,10 @@ export default class NcosManager {
         this.#spawners.push(spawner);
     }
 
+    addNco(nco: Nco): void {
+        this.ncos.push(nco);
+    }
+
     removeSpawner(spawner: Spawner<Nco>): void {
         this.#spawners = this.#spawners.filter(s => s !== spawner);
     }
@@ -35,6 +39,7 @@ export default class NcosManager {
         this.ncos.push(
             ...spawnedNcos
         );
+        this.ncos.forEach((nco) => nco.update(time, delta));
         this.#cleanNcos();
     }
 
