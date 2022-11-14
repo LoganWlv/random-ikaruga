@@ -1,0 +1,1 @@
+export type CheckedVector2Like = {x: number; y: number};
