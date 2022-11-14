@@ -3,6 +3,7 @@ import Nco from "../../model/non-character-objects/nco";
 import Spawner from "../../model/spawners/spawner";
 import { isPresent } from "../../model/utils/optional";
 import SceneManager from "../scene-manager";
+import Explosion from '../../model/non-character-objects/explosion';
 
 export default class NcosManager {
     ncos: Array<Nco>;
@@ -11,6 +12,7 @@ export default class NcosManager {
     constructor() {
         this.ncos = Array<Nco>();
         Asteroid.loadTilemap();
+        Explosion.loadTilemap();
     }
     
     destroyNco(nco: Nco): void {
