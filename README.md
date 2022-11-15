@@ -20,7 +20,7 @@ This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeSc
 ## Development
 
 After cloning the repo, run `npm install` from your project directory. Then, you can start the local development
-server by running `npm dev` and navigate to http://localhost:3000.
+server by running `npm run dev` and navigate to http://localhost:3000.
 
 ## Production
 

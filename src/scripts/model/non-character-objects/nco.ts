@@ -4,8 +4,9 @@ import { Hittable, HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
 import { Spawnable } from "../interactions/spawnable";
 import { Optional } from "../utils/optional";
+import { Updatable } from '../interactions/updatable';
 
-export default class Nco implements Moveable, Hittable, Displayable, Spawnable {
+export default class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
     velocity: Phaser.Types.Math.Vector2Like = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
@@ -28,4 +29,8 @@ export default class Nco implements Moveable, Hittable, Displayable, Spawnable {
     accelerate(direction: Math.Vector2, _delta?: number): void {
         MoveableUtils.setStaticAcceleration(this, direction);
     }
+
+    // TODO Generalize
+    update(time: number, delta: number): void {}
+
 }

@@ -6,6 +6,7 @@ import { HittableUtils } from '../scripts/model/interactions/hittable';
 import Asteroid from '../scripts/model/non-character-objects/asteroid';
 import BlueStar from '../scripts/model/non-character-objects/blue-star';
 import Spawner from '../scripts/model/spawners/spawner';
+import Explosion from '../scripts/model/non-character-objects/explosion';
 
 export default class DemoScene extends Phaser.Scene {
   constructor() {
@@ -21,6 +22,7 @@ export default class DemoScene extends Phaser.Scene {
     this.load.image('bright-stars-transparent-bg', 'assets/background/bright-stars-transparent-bg.png');
     this.load.image('ship', 'assets/player/ship.png');
     this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
+    this.load.spritesheet('explosion', 'assets/ncos/animations/explosion.png', { frameWidth: 64, frameHeight: 64, endFrame: 23 });
   }
 
   #asteroidSpawner?: Spawner<Asteroid>;
@@ -61,6 +63,13 @@ export default class DemoScene extends Phaser.Scene {
       // custom behaviour: disappear
       HittableUtils.enableOverlap(blueStar, GameManager.playerManager.player, () => {
           GameManager.ncosManager.destroyNco(blueStar);
+          const explosion = new Explosion();
+          GameManager.ncosManager.addNco(explosion);
+          explosion.displayExplosion({
+            ...Explosion.displaySpriteParameters,
+            posX: blueStar.sprite?.x ?? 0,
+            posY: blueStar.sprite?.y ?? 0,
+          });
       });
       return blueStar;
     };
