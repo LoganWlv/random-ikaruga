@@ -1,10 +1,10 @@
 import { Types } from "phaser";
-import { CheckedVector2Like } from "../utils/custom-math";
+import { Vector2D } from "../utils/custom-math";
 import { Optional } from "../utils/optional";
 
 export interface Moveable {
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
-    velocity: CheckedVector2Like;
+    velocity: Vector2D;
     move: (direction: Phaser.Math.Vector2, delta: number) => void;
     accelerate: (direction: Phaser.Math.Vector2, delta: number) => void;
 }
@@ -13,7 +13,7 @@ export class MoveableUtils {
     // velocity - override moveable velocity (vector2d {x: px/sec, y: px/sec})
     // direction - vector2d
     // delta - time in ms
-    static forceMove(moveable: Moveable, velocity: CheckedVector2Like, direction: Phaser.Math.Vector2, delta: number): void {
+    static forceMove(moveable: Moveable, velocity: Vector2D, direction: Phaser.Math.Vector2, delta: number): void {
         if (!moveable.sprite) { return; }
         
         const normDirection = direction.normalize();

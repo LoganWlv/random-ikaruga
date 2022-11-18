@@ -3,12 +3,12 @@ import { Damageable, DamageableUtils } from "../interactions/damageable";
 import { Displayable, DisplayableUtils, DisplaySpriteParameters } from "../interactions/displayable";
 import { HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
-import { CheckedVector2Like } from "../utils/custom-math";
+import { Vector2D } from "../utils/custom-math";
 import { Optional } from "../utils/optional";
 
 export default abstract class Character implements Moveable, Damageable, Displayable {
     hp = 0.;
-    velocity: CheckedVector2Like = { x: .0, y: .0 };
+    velocity: Vector2D = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
     move(direction: Math.Vector2, delta: number): void {

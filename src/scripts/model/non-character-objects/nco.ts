@@ -3,12 +3,12 @@ import { Displayable, DisplayableUtils, DisplaySpriteParameters } from "../inter
 import { Hittable, HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
 import { Spawnable } from "../interactions/spawnable";
-import { CheckedVector2Like } from "../utils/custom-math";
+import { Vector2D } from "../utils/custom-math";
 import { Optional } from "../utils/optional";
 import { Updatable } from '../interactions/updatable';
 
 export default abstract class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
-    velocity: CheckedVector2Like = { x: .0, y: .0 };
+    velocity: Vector2D = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
     isHit(): boolean {
