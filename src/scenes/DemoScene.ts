@@ -23,6 +23,7 @@ export default class DemoScene extends Phaser.Scene {
     this.load.image('ship', 'assets/player/ship.png');
     this.load.spritesheet('asteroids', 'assets/ncos/animations/asteroids125x125-tilemap.png', { frameWidth: 125, frameHeight: 125 });
     this.load.spritesheet('explosion', 'assets/ncos/animations/explosion.png', { frameWidth: 64, frameHeight: 64, endFrame: 23 });
+    this.load.spritesheet('shiba-inu-ship', 'assets/player/animations/shiba-inu-ship500x500-tilemap.png', { frameWidth: 500, frameHeight: 500 });
   }
 
   #asteroidSpawner?: Spawner<Asteroid>;
