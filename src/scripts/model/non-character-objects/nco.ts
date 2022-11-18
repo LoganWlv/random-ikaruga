@@ -3,11 +3,12 @@ import { Displayable, DisplayableUtils, DisplaySpriteParameters } from "../inter
 import { Hittable, HittableUtils } from "../interactions/hittable";
 import { Moveable, MoveableUtils } from "../interactions/moveable";
 import { Spawnable } from "../interactions/spawnable";
+import { Vector2D } from "../utils/custom-math";
 import { Optional } from "../utils/optional";
 import { Updatable } from '../interactions/updatable';
 
-export default class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
-    velocity: Phaser.Types.Math.Vector2Like = { x: .0, y: .0 };
+export default abstract class Nco implements Moveable, Hittable, Displayable, Spawnable, Updatable {
+    velocity: Vector2D = { x: .0, y: .0 };
     sprite?: Optional<Types.Physics.Arcade.SpriteWithDynamicBody>;
 
     isHit(): boolean {
@@ -32,5 +33,4 @@ export default class Nco implements Moveable, Hittable, Displayable, Spawnable, 
 
     // TODO Generalize
     update(time: number, delta: number): void {}
-
 }
